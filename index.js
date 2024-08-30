@@ -19,9 +19,22 @@ document.querySelector('#submitWorkout').addEventListener('click', displayWorkou
 // NOW LET'S DEBUG TO PREVENT DUPLICATE GOALS FROM BEING SUBMITTED 🚀
 
 const addNewGoal = () => {
-    const goalInput = document.querySelector('#goalInput').value;
+    const goalInput = document.querySelector('#goalInput').value.trim();
     const goalList = document.querySelector('#goalList');
-    
+    const existingGoals = document.querySelectorAll('#goalList li');
+    //check if input is not empty#
+    if (goalInput === '') {
+        alert('please enter a goal!');
+        return;
+    }
+    //check for duplicates#
+    for (let goal of existingGoals) {
+        if (goal.textContent.toLowerCase() === goalInput.toLowerCase()) {
+            alert('goal already exists!');
+            return;
+        }
+    }
+
     // ⚠️ Hint 1: Check for duplicates
     // Use 'goalList' to get all existing goals and check if 'goalInput' matches any of them.
     
@@ -39,11 +52,13 @@ const addNewGoal = () => {
     const newGoal = document.createElement('li');
     newGoal.textContent = goalInput;
     goalList.appendChild(newGoal);
+    // makes the input bar empty#
+    document.querySelector('#goalInput').value = '';
 };
 
 // Add event listener to the goal submit button
 document.querySelector('#submitGoal').addEventListener('click', addNewGoal);
-
+document.querySelector('#submitGoal').addEventListener('click', addNewGoal);
 ///
 let waterIntake = 0;
 const updateWaterIntake = (change) => {
